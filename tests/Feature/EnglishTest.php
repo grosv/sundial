@@ -21,3 +21,14 @@ test('months work', function () {
     assertSame('February', (new Parser())->parse('Feb 23, 2012')->toFormat('F'));
     assertSame('September', (new Parser())->parse('9/12/1989 at 4pm')->toFormat('F'));
 });
+
+test('dates work', function () {
+    assertSame('23', (new Parser())->parse('March 23, 2012')->toFormat('d'));
+    assertSame('11', (new Parser())->parse('Feb 11, 2012')->toFormat('d'));
+    assertSame('12', (new Parser())->parse('9/12/1989 at 4pm')->toFormat('d'));
+});
+
+test('can get date from any date containing string', function () {
+    assertSame('2020-04-20', (new Parser())->parse('April 20, 2020')->toFormat('Y-m-d'));
+    assertSame('1974-08-13', (new Parser())->parse('13th of August 1974')->toFormat('Y-m-d'));
+});

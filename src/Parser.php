@@ -19,12 +19,11 @@ final class Parser
     private int $ts;
     private string $test;
     private array $matches;
-    private array $boundary;
+    private array $boundary = ['start' => 0, 'end' => 2147483647];
 
     public function __construct()
     {
         $this->language  = 'eng';
-        $this->boundary  = ['start' => 0, 'end' => 2147483647];
     }
 
     public function setLanguage(string $language): self
@@ -100,11 +99,26 @@ final class Parser
 
     public function getDate(): string
     {
-        return date('d');
+        $test = preg_replace('/(?<=[0-9])(?:st|nd|rd|th)/', '', $this->test);
+        foreach (explode(' ', $test) as $word) {
+            if (is_numeric($word) && (int) $word > 0 && (int) $word < 32) {
+                return $word;
+            }
+        }
+
+        return '';
     }
 
     public function getDay(): string
     {
+        foreach ($this->matches['days'] as $k => $v) {
+            foreach ($v as $day) {
+                if ((bool) preg_match("/$day/", $this->test)) {
+                    return $k;
+                }
+            }
+        }
+
         return '';
     }
 
