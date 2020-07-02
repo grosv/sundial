@@ -1,4 +1,4 @@
-# Sundial ( Not Ready For Use Yet )
+# Sundial
 
 Natural Language Date / Time Processing for PHP 7.4+
 
@@ -14,7 +14,7 @@ Natural Language Date / Time Processing for PHP 7.4+
 
 ### Installation
 
-Warning: This package is not yet in a usable state. Feel free to jump in and do a translation, knock out an issue, or help me tighten up the docs if you like.
+Warning: This package is not yet stable. There might be breaking changes until the 1.0 release.
 
 ```shell script
 composer require grosv/sundial
@@ -36,3 +36,9 @@ $parser->setBetween(time(), strtotime('+1 year'))->parse('August 9, 1992')->toFo
 // By default we use English but this can be overridden using the ISO 639-2 Code of the language if we have it.
 $parser->setLanguage('esp')->parse('23 Mayo, 20204')->toFormat('m/d/Y'); // 05/23/2024
 ```
+
+### Help Wanted
+
+This is very much a minimum viable package and needs a great deal of TLC. Contributions are welcome from anyone
+willing to jump in and work on the code, add more tests, knock out an issue, do a translation o a new language, 
+or just build out the documentation.
