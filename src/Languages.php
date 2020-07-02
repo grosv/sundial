@@ -41,12 +41,6 @@ final class Languages
                 'friday'    => [' friday ', ' fri '],
                 'saturday'  => [' saturday ', ' sat '],
             ],
-            'at' => [
-                'at', 'starting', 'beginning',
-            ],
-            'on' => [
-                'on',
-            ],
         ];
     }
 }

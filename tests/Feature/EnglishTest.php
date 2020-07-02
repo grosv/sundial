@@ -32,3 +32,26 @@ test('can get date from any date containing string', function () {
     assertSame('2020-04-20', (new Parser())->parse('April 20, 2020')->toFormat('Y-m-d'));
     assertSame('1974-08-13', (new Parser())->parse('13th of August 1974')->toFormat('Y-m-d'));
 });
+
+test('can find the time', function () {
+    assertSame('11:20 PM', (new Parser())->parse('April 20, 2020 at 23:20')->toFormat('h:i A'));
+    assertSame('07:15 AM', (new Parser())->parse('April 20, 2020 at 07:15')->toFormat('h:i A'));
+    assertSame('07:45 PM', (new Parser())->parse('April 20, 2020 at 07:45pm')->toFormat('h:i A'));
+    assertSame('08:51 PM', (new Parser())->parse('April 20, 2020 at 8:51 pm')->toFormat('h:i A'));
+});
+
+it('throws an exception if earlier than boundary minimum', function () {
+    (new Parser())->parse('April 20, 1992')->setBetween(time(), strtotime('tomorrow'))->toFormat('Y-m-d');
+})->throws(Exception::class);
+
+it('throws an exception if later than boundary minimum', function () {
+    (new Parser())->parse('April 20, 2032')->setBetween(time(), strtotime('tomorrow'))->toFormat('Y-m-d');
+})->throws(Exception::class);
+
+it('throws an exception if timestamp earlier than boundary minimum', function () {
+    (new Parser())->parse('April 20, 1992')->setBetween(time(), strtotime('tomorrow'))->toTimestamp();
+})->throws(Exception::class);
+
+it('throws an exception if timestamp later than boundary minimum', function () {
+    (new Parser())->parse('April 20, 2032')->setBetween(time(), strtotime('tomorrow'))->toTimestamp();
+})->throws(Exception::class);

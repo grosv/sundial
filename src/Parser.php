@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Grosv\Sundial;
 
+use Exception;
+
 /**
  * @internal
  */
@@ -19,7 +21,7 @@ final class Parser
     private int $ts;
     private string $test;
     private array $matches;
-    private array $boundary = ['start' => 0, 'end' => 2147483647];
+    private array $boundary = ['start' => 1, 'end' => 2147483647];
 
     public function __construct()
     {
@@ -100,7 +102,7 @@ final class Parser
     public function getDate(): string
     {
         $test = preg_replace('/(?<=[0-9])(?:st|nd|rd|th)/', '', $this->test);
-        foreach (explode(' ', $test) as $word) {
+        foreach (explode(' ', (string) $test) as $word) {
             if (is_numeric($word) && (int) $word > 0 && (int) $word < 32) {
                 return $word;
             }
@@ -124,7 +126,16 @@ final class Parser
 
     public function getTime(): string
     {
-        return date('h:i:s a');
+        preg_match('/((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/', $this->string, $matches);
+        if (is_array($matches) && isset($matches[0])) {
+            return $matches[0] ?? '';
+        }
+        preg_match('/([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?/', $this->string, $matches);
+        if (is_array($matches) && isset($matches[0])) {
+            return $matches[0] ?? '';
+        }
+
+        return '';
     }
 
     public function parseNumericFormats(): void
@@ -160,11 +171,19 @@ final class Parser
 
     public function toFormat(string $format): string
     {
+        if ($this->boundary['start'] > $this->ts || $this->ts > $this->boundary['end']) {
+            throw new Exception('Date / Time Outside of Range');
+        }
+
         return date($format, $this->ts);
     }
 
     public function toTimestamp(): int
     {
+        if ($this->boundary['start'] > $this->ts || $this->ts > $this->boundary['end']) {
+            throw new Exception('Date / Time Outside of Range');
+        }
+
         return $this->ts;
     }
 }
