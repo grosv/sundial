@@ -1,5 +1,5 @@
 {
-    "name": "grosv/natural-time",
+    "name": "grosv/sundial",
     "description": "An attempt at natural language date / time parsing in PHP",
     "keywords": ["php", "date", "time", "natural language"],
     "license": "MIT",
@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Grosv\\NaturalTime\\": "src/"
+            "Grosv\\Sundial\\": "src/"
         }
     },
     "autoload-dev": {

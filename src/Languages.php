@@ -2,35 +2,50 @@
 
 declare(strict_types=1);
 
-namespace Grosv\NaturalTime;
+namespace Grosv\Sundial;
 
 final class Languages
 {
     public function load(string $language): array
     {
-        if ($language === 'english') {
-            return $this->english();
+        if ($language === 'eng') {
+            return $this->eng();
         }
 
-        return $this->english();
+        return $this->eng();
     }
 
-    public function english(): array
+    public function eng(): array
     {
         return [
             'months' => [
-                'january'   => [' january ', ' jan '],
-                'february'  => [' february ', ' feb '],
-                'march'     => [' march ', ' mar '],
-                'april'     => [' april ', ' apr '],
-                'may'       => [' may '],
-                'june'      => [' june ', ' jun '],
-                'july'      => [' july ', ' jul '],
-                'august'    => [' august ', ' aug '],
-                'september' => [' september ', ' sep '],
-                'october'   => [' october ', ' oct '],
-                'november'  => [' november ', ' nov '],
-                'december'  => [' december ', ' dec '],
+                '1'       => [' january ', ' jan '],
+                '2'       => [' february ', ' feb '],
+                '3'       => [' march ', ' mar '],
+                '4'       => [' april ', ' apr '],
+                '5'       => [' may '],
+                '6'       => [' june ', ' jun '],
+                '7'       => [' july ', ' jul '],
+                '8'       => [' august ', ' aug '],
+                '9'       => [' september ', ' sep '],
+                '10'      => [' october ', ' oct '],
+                '11'      => [' november ', ' nov '],
+                '12'      => [' december ', ' dec '],
+            ],
+            'days' => [
+                'sunday'    => [' sunday ', ' sun '],
+                'monday'    => [' monday ', ' mon '],
+                'tuesday'   => [' tuesday ', ' tue '],
+                'wednesday' => [' wednesday ', ' wed '],
+                'thursday'  => [' thursday ', ' thu '],
+                'friday'    => [' friday ', ' fri '],
+                'saturday'  => [' saturday ', ' sat '],
+            ],
+            'at' => [
+                'at', 'starting', 'beginning',
+            ],
+            'on' => [
+                'on',
             ],
         ];
     }

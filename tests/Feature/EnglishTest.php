@@ -1,6 +1,6 @@
 <?php
 
-use Grosv\NaturalTime\Parser;
+use Grosv\Sundial\Parser;
 
 test('now as timestamp', function () {
     assertSame(time(), (new Parser())->parse('now')->toTimestamp());
@@ -19,4 +19,5 @@ test('years work', function () {
 test('months work', function () {
     assertSame('March', (new Parser())->parse('March 23, 2012')->toFormat('F'));
     assertSame('February', (new Parser())->parse('Feb 23, 2012')->toFormat('F'));
+    assertSame('September', (new Parser())->parse('9/12/1989 at 4pm')->toFormat('F'));
 });
