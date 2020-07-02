@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Grosv\Sundial;
 
-use Exception;
-
 /**
  * @internal
  */
@@ -127,11 +125,11 @@ final class Parser
     public function getTime(): string
     {
         preg_match('/((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/', $this->string, $matches);
-        if (is_array($matches) && isset($matches[0])) {
+        if (is_array($matches) && sizeof($matches) > 0) {
             return $matches[0] ?? '';
         }
         preg_match('/([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?/', $this->string, $matches);
-        if (is_array($matches) && isset($matches[0])) {
+        if (is_array($matches) && sizeof($matches) > 0) {
             return $matches[0] ?? '';
         }
 
@@ -169,19 +167,25 @@ final class Parser
         return;
     }
 
+    /**
+     * @throws DateTimeOutOfRangeException
+     */
     public function toFormat(string $format): string
     {
         if ($this->boundary['start'] > $this->ts || $this->ts > $this->boundary['end']) {
-            throw new Exception('Date / Time Outside of Range');
+            throw new  DateTimeOutOfRangeException('Date / Time Outside of Range');
         }
 
         return date($format, $this->ts);
     }
 
+    /**
+     * @throws DateTimeOutOfRangeException
+     */
     public function toTimestamp(): int
     {
         if ($this->boundary['start'] > $this->ts || $this->ts > $this->boundary['end']) {
-            throw new Exception('Date / Time Outside of Range');
+            throw new DateTimeOutOfRangeException('Date / Time Outside of Range');
         }
 
         return $this->ts;

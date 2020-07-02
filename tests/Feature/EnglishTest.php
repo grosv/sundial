@@ -1,5 +1,6 @@
 <?php
 
+use Grosv\Sundial\DateTimeOutOfRangeException;
 use Grosv\Sundial\Parser;
 
 test('now as timestamp', function () {
@@ -50,8 +51,8 @@ it('throws an exception if later than boundary minimum', function () {
 
 it('throws an exception if timestamp earlier than boundary minimum', function () {
     (new Parser())->parse('April 20, 1992')->setBetween(time(), strtotime('tomorrow'))->toTimestamp();
-})->throws(Exception::class);
+})->throws(DateTimeOutOfRangeException::class);
 
 it('throws an exception if timestamp later than boundary minimum', function () {
     (new Parser())->parse('April 20, 2032')->setBetween(time(), strtotime('tomorrow'))->toTimestamp();
-})->throws(Exception::class);
+})->throws(DateTimeOutOfRangeException::class);
