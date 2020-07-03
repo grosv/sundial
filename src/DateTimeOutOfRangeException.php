@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace Grosv\Sundial;
 
-final class DateTimeOutOfRangeException extends \RuntimeException
+final class DateTimeOutOfRangeException extends \Exception
 {
 }

@@ -124,11 +124,11 @@ final class Parser
 
     public function getTime(): string
     {
-        preg_match('/((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/', $this->string, $matches);
+        preg_match('/((1[0-2]|0?[1-9]):?([0-5][0-9])? ?([AaPp][Mm])) /', $this->string, $matches);
         if (is_array($matches) && sizeof($matches) > 0) {
             return $matches[0] ?? '';
         }
-        preg_match('/([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?/', $this->string, $matches);
+        preg_match('/([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])? /', $this->string, $matches);
         if (is_array($matches) && sizeof($matches) > 0) {
             return $matches[0] ?? '';
         }
