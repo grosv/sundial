@@ -43,4 +43,33 @@ final class Languages
             ],
         ];
     }
+
+    public function esp(): array
+    {
+        return [
+            'months' => [
+                '1'       => [' enero '],
+                '2'       => [' febrero ', ' feb '],
+                '3'       => [' marzo ', ' mar '],
+                '4'       => [' abril ', ' abr '],
+                '5'       => [' mayo '],
+                '6'       => [' junio ', ' jun '],
+                '7'       => [' julio ', ' jul '],
+                '8'       => [' agosto ',],
+                '9'       => [' septiembre ', ' sept ', 'set'],
+                '10'      => [' octubre ', ' oct '],
+                '11'      => [' noviembre ', ' nov '],
+                '12'      => [' diciembre ', ' dic '],
+            ],
+            'days' => [
+                'sunday'    => [' domingo ', ' d ', ' do ', ' dom '],
+                'monday'    => [' lunes ', ' lu ', ' lu ', ' lun '],
+                'tuesday'   => [' martes ', ' m ', ' ma', ' mar '],
+                'wednesday' => [' miércoles ', ' miercoles ', ' x ', ' mi ', ' mie ', ' mié '],
+                'thursday'  => [' jueves ', ' j ', ' ju ', ' jue '],
+                'friday'    => [' viernes ', ' v ', ' vi ', ' vie '],
+                'saturday'  => [' sábado ', ' sabado ', ' s ', ' sá ', ' sa ', ' sab '],
+            ],
+        ];
+    }
 }

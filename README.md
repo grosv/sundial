@@ -1,6 +1,6 @@
 # Sundial
 
-Natural Language Date / Time Processing for PHP 7.4+
+Natural Language Date / Time String Parsing for PHP 7.4+
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/grosv/sundial/main/docs/sundial.jpg" height="300" alt="">
