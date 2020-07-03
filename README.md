@@ -42,3 +42,11 @@ $parser->setLanguage('esp')->parse('23 Mayo, 20204')->toFormat('m/d/Y'); // 05/2
 This is very much a minimum viable package and needs a great deal of TLC. Contributions are welcome from anyone
 willing to jump in and work on the code, add more tests, knock out an issue, do a translation o a new language, 
 or just build out the documentation.
+
+### What Remains
+
+Date and time parsing is in pretty good shape so as long as what's typed into the box contains an actual date and time 
+it's usually parsed correctly. I'm sure we'll find cases where it's not and get those handled with little trouble.
+
+The hard part starts now. Things like "Next Tuesday at 4 pm" and even better "Next Tuesday at 4 in the afternoon" and 
+the gold standard would be "Christmas Eve at ten to midnight".
