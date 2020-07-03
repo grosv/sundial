@@ -55,7 +55,7 @@ final class Languages
                 '5'       => [' mayo '],
                 '6'       => [' junio ', ' jun '],
                 '7'       => [' julio ', ' jul '],
-                '8'       => [' agosto ',],
+                '8'       => [' agosto '],
                 '9'       => [' septiembre ', ' sept ', 'set'],
                 '10'      => [' octubre ', ' oct '],
                 '11'      => [' noviembre ', ' nov '],
