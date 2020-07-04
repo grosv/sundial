@@ -50,3 +50,9 @@ it's usually parsed correctly. I'm sure we'll find cases where it's not and get 
 
 The hard part starts now. Things like "Next Tuesday at 4 pm" and even better "Next Tuesday at 4 in the afternoon" and 
 the gold standard would be "Christmas Eve at ten to midnight".
+
+### Shout Out
+
+This is the first package I've built using [Nuno Maduro's Skeleton PHP](https://github.com/nunomaduro/skeleton-php). 
+It was a great experience. I'm definitely going to use it again and I wouldn't hesitate to recommend it to anyone
+looking for a really solid PHP package boilerplate to kickstart their project.
