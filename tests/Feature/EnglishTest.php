@@ -1,7 +1,12 @@
 <?php
 
 use Grosv\Sundial\DateTimeOutOfRangeException;
+use Grosv\Sundial\NoDateOrTimeStringFoundException;
 use Grosv\Sundial\Parser;
+
+test('failures to the front', function () {
+    assertSame(true, true); // Just a placeholder test that makes it easy to dd() when things fail.
+});
 
 test('now as timestamp', function () {
     assertSame(time(), (new Parser())->parse('now')->toTimestamp());
@@ -43,6 +48,17 @@ test('can find the time', function () {
     assertSame('02:00 AM', (new Parser())->parse('April 20, 2020 at 2am')->toFormat('h:i A'));
 });
 
+test('it can manage yesterday and tomorrow', function () {
+    assertSame((new DateTime('12:00 am'))->add(new DateInterval('P1D'))->format('c'),
+        (new Parser())->parse('tomorrow')->toFormat('c'));
+    assertSame((new DateTime('12:00 am'))->sub(new DateInterval('P1D'))->format('c'),
+        (new Parser())->parse('yesterday')->toFormat('c'));
+    assertSame((new DateTime('14:00'))->add(new DateInterval('P1D'))->format('c'),
+        (new Parser())->parse('2:00 pm tomorrow')->toFormat('c'));
+    assertSame((new DateTime('16:00'))->sub(new DateInterval('P1D'))->format('c'),
+        (new Parser())->parse('yesterday at 4:00 pm')->toFormat('c'));
+});
+
 it('throws an exception if earlier than boundary minimum', function () {
     (new Parser())->parse('April 20, 1992')->setBetween(time(), strtotime('tomorrow'))->toFormat('Y-m-d');
 })->throws(DateTimeOutOfRangeException::class);
@@ -58,3 +74,7 @@ it('throws an exception if timestamp earlier than boundary minimum', function ()
 it('throws an exception if timestamp later than boundary minimum', function () {
     (new Parser())->parse('April 20, 2032')->setBetween(time(), strtotime('tomorrow'))->toTimestamp();
 })->throws(DateTimeOutOfRangeException::class);
+
+it('throws an exception if the string is not date or time related', function () {
+    (new Parser())->parse('Taco salad')->toTimestamp();
+})->throws(NoDateOrTimeStringFoundException::class);

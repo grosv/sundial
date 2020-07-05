@@ -40,7 +40,10 @@ final class Languages
                 'thursday'  => [' thursday ', ' thu '],
                 'friday'    => [' friday ', ' fri '],
                 'saturday'  => [' saturday ', ' sat '],
+                'tomorrow'  => [' tomorrow '],
+                'yesterday' => [' yesterday '],
             ],
+            'now' => [' now '],
         ];
     }
 
@@ -69,7 +72,10 @@ final class Languages
                 'thursday'  => [' jueves ', ' j ', ' ju ', ' jue '],
                 'friday'    => [' viernes ', ' v ', ' vi ', ' vie '],
                 'saturday'  => [' sábado ', ' sabado ', ' s ', ' sá ', ' sa ', ' sab '],
+                'tomorrow'  => [' mañana ', ' manana '],
+                'yesterday' => [' ayer '],
             ],
+            'now' => [' ahora '],
         ];
     }
 }
