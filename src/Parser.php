@@ -114,13 +114,14 @@ final class Parser
                 }
             }
         }
+
         return '';
     }
 
     public function getTime(): string
     {
         foreach ($this->matches['now'] as $word) {
-            if (in_array(trim($word), explode(' ', $this->test))) {
+            if (in_array(trim($word), explode(' ', $this->test), true)) {
                 return date('H:i:s');
             }
         }
@@ -175,23 +176,21 @@ final class Parser
     {
         $string = null;
 
-        if ($this->time) {
+        if ((bool) $this->time) {
             $string = $this->time;
         }
 
-        if ($this->day) {
+        if ((bool) $this->day) {
             $string = $this->day;
         }
 
-        if ($this->day && $this->time) {
+        if ((bool) $this->day && (bool) $this->time) {
             $string = implode(' ', [$this->day, $this->time]);
         }
 
-        if ($this->month && $this->date) {
+        if ((bool) $this->month && (bool) $this->date) {
             $string = implode(' ', [$this->date, $this->month, $this->year, $this->time]);
         }
-
-
 
         if (is_null($string)) {
             throw new NoDateOrTimeStringFoundException('Unable to find a date or time string to parse.');
@@ -200,9 +199,6 @@ final class Parser
         $ts = new DateTime($string);
 
         $this->ts = $ts->getTimestamp();
-
-
-
     }
 
     /**
