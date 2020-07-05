@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Grosv\Sundial;
 
+use DateTime;
+
 /**
  * @internal
  */
@@ -16,7 +18,7 @@ final class Parser
     private string $day;
     private string $date;
     private string $time;
-    private int $ts;
+    private int $ts = 0;
     private string $test;
     private array $matches;
     private array $boundary = ['start' => 1, 'end' => 2147483647];
@@ -49,12 +51,6 @@ final class Parser
 
     public function parse(string $string): self
     {
-        $try = strtotime($string);
-        if (abs((int) $try) > 86400) {
-            $this->ts = (int) $try;
-
-            return $this;
-        }
         $this->loadLanguage();
         $this->string = strtolower(' ' . $string . ' ');
         $this->test   = (string) preg_replace('/[\W]/', ' ', $this->string);
@@ -65,7 +61,7 @@ final class Parser
         $this->day    = $this->day ?? $this->getDay();
         $this->time   = $this->time ?? $this->getTime();
 
-        $this->ts = (int) strtotime(implode(' ', [$this->date, $this->month, $this->year, $this->time]));
+        $this->calculateTime();
 
         return $this;
     }
@@ -124,6 +120,11 @@ final class Parser
 
     public function getTime(): string
     {
+        foreach ($this->matches['now'] as $word) {
+            if (in_array(trim($word), explode(' ', $this->test), true)) {
+                return date('H:i:s');
+            }
+        }
         preg_match('/((1[0-2]|0?[1-9]):?([0-5][0-9])? ?([AaPp][Mm])) /', $this->string, $matches);
         if (is_array($matches) && sizeof($matches) > 0) {
             return $matches[0] ?? '';
@@ -159,12 +160,45 @@ final class Parser
         }
 
         if (checkdate((int) $m, (int) $d, (int) $y)) {
-            $this->month = (string) $this->matches['months'][ltrim((string) $m, '0')][0];
+            $this->month = trim((string) $this->matches['months'][ltrim((string) $m, '0')][0]);
             $this->date  = (string) $d;
             $this->year  = (string) $y;
         }
 
         return;
+    }
+
+    /**
+     * @throws NoDateOrTimeStringFoundException
+     * @throws \Exception
+     */
+    public function calculateTime(): void
+    {
+        $string = null;
+
+        if ((bool) $this->time) {
+            $string = $this->time;
+        }
+
+        if ((bool) $this->day) {
+            $string = $this->day;
+        }
+
+        if ((bool) $this->day && (bool) $this->time) {
+            $string = implode(' ', [$this->day, $this->time]);
+        }
+
+        if ((bool) $this->month && (bool) $this->date) {
+            $string = implode(' ', [$this->date, $this->month, $this->year, $this->time]);
+        }
+
+        if (is_null($string)) {
+            throw new NoDateOrTimeStringFoundException('Unable to find a date or time string to parse.');
+        }
+
+        $ts = new DateTime($string);
+
+        $this->ts = $ts->getTimestamp();
     }
 
     /**
